@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Culte 15 Février - Yesu le Agbé</title>
+    <title>Yesu le Agbé Bé Château</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary: #2e7d32;
             --accent: #ff9800;
-            --text: #333;
             --bg: #f0f4f8;
+            --whatsapp: #25D366;
         }
 
         * {
@@ -27,129 +27,98 @@
             align-items: center;
             min-height: 100vh;
             padding: 15px;
-            /* Évite que le container touche les bords sur mobile */
         }
 
         .container {
             background: white;
             width: 100%;
-            max-width: 450px;
-            /* Largeur max sur PC */
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            border-radius: 25px;
+            padding: 35px 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
 
         h1 {
             color: var(--primary);
-            font-size: clamp(1.4em, 5vw, 1.8em);
-            /* Taille de police fluide */
+            font-size: 1.5em;
             margin: 10px 0;
+            line-height: 1.2;
         }
 
         .church-icon {
             color: var(--accent);
-            font-size: 2.5em;
+            font-size: 2.8em;
+            margin-bottom: 5px;
         }
 
-        /* COMPTE À REBOURS RESPONSIVE */
+        .location {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 25px;
+        }
+
         .countdown-box {
             background: #fffdf0;
             border: 1px solid #ffe082;
-            border-radius: 15px;
-            padding: 15px 10px;
+            border-radius: 20px;
+            padding: 25px 10px;
             margin: 20px 0;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .timer-grid {
             display: flex;
             justify-content: space-around;
-            flex-wrap: nowrap;
-            /* Garde tout sur une ligne */
-            gap: 5px;
-        }
-
-        .timer-unit {
-            flex: 1;
-            min-width: 60px;
-        }
-
-        .timer-unit i {
-            display: block;
-            font-size: 1.1em;
-            color: var(--primary);
-            margin-bottom: 5px;
         }
 
         .timer-value {
             display: block;
-            font-size: clamp(1.2em, 4vw, 1.6em);
+            font-size: 1.6em;
             font-weight: 800;
             color: #d32f2f;
         }
 
         .timer-label {
             display: block;
-            font-size: 0.65em;
+            font-size: 0.7em;
             color: #777;
             text-transform: uppercase;
-            margin-top: 2px;
+            margin-top: 4px;
         }
 
-        /* INFOS SERVICE */
-        .schedule {
-            text-align: left;
-            margin-top: 20px;
-        }
-
-        .info-row {
-            display: flex;
-            align-items: center;
-            background: #f9f9f9;
-            margin-bottom: 10px;
-            padding: 12px;
-            border-radius: 10px;
-            font-size: 0.95em;
-        }
-
-        .info-row i {
+        .status-msg {
             color: var(--primary);
-            margin-right: 12px;
-            font-size: 1.1em;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin: 0;
         }
 
-        /* BOUTON WHATSAPP */
-        .btn-whatsapp {
+        .social-btns {
+            margin-top: 30px;
+        }
+
+        .btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #25D366;
+            gap: 12px;
             color: white;
             text-decoration: none;
-            padding: 15px;
+            padding: 16px;
             border-radius: 50px;
             font-weight: bold;
-            margin-top: 20px;
+            font-size: 1.05em;
+            background: var(--whatsapp);
             transition: 0.3s;
-            width: 100%;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
         }
 
-        .btn-whatsapp:active {
+        .btn:active {
             transform: scale(0.95);
-        }
-
-        /* Effet clic mobile */
-
-        /* Ajustements pour écrans très étroits (< 350px) */
-        @media (max-width: 350px) {
-            .timer-unit {
-                min-width: 50px;
-            }
-
-            .container {
-                padding: 15px;
-            }
         }
     </style>
 </head>
@@ -159,68 +128,94 @@
         <i class="fa-solid fa-church church-icon"></i>
         <h1>Eglise Yesu le Agbé Bé Château</h1>
 
-        <p style="font-size: 0.9em; color: #666; margin-bottom: 20px;">
+        <p class="location">
             <i class="fa-solid fa-location-dot"></i> Rue de l’Ocam, au bord du goudron
         </p>
 
         <div class="countdown-box">
-            <div style="font-size: 0.8em; font-weight: bold; margin-bottom: 15px; color: #856404;">
-                <i class="fa-solid fa-hourglass-half fa-spin"></i> TEMPS RESTANT
+            <div id="status-title"
+                style="font-size: 0.85em; font-weight: bold; margin-bottom: 15px; color: #856404; letter-spacing: 1px;">
+                <i class="fa-solid fa-hourglass-half fa-spin"></i> PROCHAIN CULTE DANS :
             </div>
-            <div class="timer-grid" id="timer">
-                <div class="timer-unit">
-                    <i class="fa-solid fa-calendar-day"></i>
-                    <span class="timer-value" id="days">00</span>
-                    <span class="timer-label">Jours</span>
-                </div>
-                <div class="timer-unit">
-                    <i class="fa-solid fa-clock"></i>
-                    <span class="timer-value" id="hours">00</span>
-                    <span class="timer-label">Heures</span>
-                </div>
-                <div class="timer-unit">
-                    <i class="fa-solid fa-hourglass-start"></i>
-                    <span class="timer-value" id="minutes">00</span>
-                    <span class="timer-label">Min</span>
-                </div>
-                <div class="timer-unit">
-                    <i class="fa-solid fa-bolt"></i>
-                    <span class="timer-value" id="seconds">00</span>
-                    <span class="timer-label">Sec</span>
+            <div id="timer-content">
+                <div class="timer-grid" id="timer-display">
+                    <div class="timer-unit"><span class="timer-value" id="days">00</span><span
+                            class="timer-label">Jours</span></div>
+                    <div class="timer-unit"><span class="timer-value" id="hours">00</span><span
+                            class="timer-label">Heures</span></div>
+                    <div class="timer-unit"><span class="timer-value" id="minutes">00</span><span
+                            class="timer-label">Min</span></div>
+                    <div class="timer-unit"><span class="timer-value" id="seconds">00</span><span
+                            class="timer-label">Sec</span></div>
                 </div>
             </div>
         </div>
 
-        <div class="schedule">
-            <div class="info-row">
-                <i class="fa-solid fa-book-bible"></i>
-                <span><strong>École du dimanche :</strong> 06h30</span>
-            </div>
-            <div class="info-row">
-                <i class="fa-solid fa-hands-praying"></i>
-                <span><strong>Culte dominical :</strong> 07h30</span>
-            </div>
+        <div class="social-btns">
+            <a href="https://wa.me/22890045869" class="btn">
+                <i class="fa-brands fa-whatsapp fa-xl"></i> Nous contacter sur WhatsApp
+            </a>
         </div>
-
-        <a href="https://wa.me/22890045869" class="btn-whatsapp">
-            <i class="fa-brands fa-whatsapp fa-xl" style="margin-right: 10px;"></i>
-            Rejoignez-nous
-        </a>
     </div>
 
     <script>
-        // Cible : Dimanche 15 Février 2026 à 06:30
-        const targetDate = new Date("Feb 15, 2026 06:30:00").getTime();
+        function getNextServiceStart() {
+            const now = new Date();
+            let target = new Date();
+            let dayDiff = (7 - now.getDay()) % 7;
+
+            // Si c'est dimanche, on vérifie si 12h15 est passé
+            if (now.getDay() === 0) {
+                const currentMinutes = now.getHours() * 60 + now.getMinutes();
+                if (currentMinutes >= (12 * 60 + 15)) {
+                    dayDiff = 7;
+                }
+            }
+
+            target.setDate(now.getDate() + dayDiff);
+            target.setHours(6, 30, 0, 0);
+            return target;
+        }
 
         function updateTimer() {
-            const now = new Date().getTime();
-            const diff = targetDate - now;
+            const now = new Date();
+            const nowTs = now.getTime();
+            const targetDate = getNextServiceStart();
+            const targetTs = targetDate.getTime();
 
-            if (diff <= 0) {
-                document.getElementById("timer").innerHTML = "<h3 style='color:var(--primary)'>Le culte est en cours ! 🙏</h3>";
+            const titleEl = document.getElementById("status-title");
+            const contentEl = document.getElementById("timer-content");
+
+            // Minutes actuelles pour les paliers du dimanche
+            const currentMin = now.getHours() * 60 + now.getMinutes();
+            const ecoleEnd = 7 * 60 + 30;    // 07:30
+            const culteEnd = 12 * 60 + 15;   // 12:15
+
+            // SI NOUS SOMMES DIMANCHE MATIN
+            if (now.getDay() === 0 && currentMin >= 390 && currentMin < culteEnd) {
+                titleEl.innerHTML = "✨ BIENVENUE ✨";
+                if (currentMin < ecoleEnd) {
+                    contentEl.innerHTML = "<p class='status-msg'>📖 École du Dimanche <br> en cours...</p>";
+                } else {
+                    contentEl.innerHTML = "<p class='status-msg'>🙏 Culte Dominical <br> en cours...</p>";
+                }
                 return;
             }
 
+            // SINON : MODE COMPTE À REBOURS
+            titleEl.innerHTML = '<i class="fa-solid fa-hourglass-half fa-spin"></i> PROCHAIN CULTE DANS :';
+            // Restaurer la grille si elle a été effacée par le message "en cours"
+            if (!document.getElementById("timer-display")) {
+                contentEl.innerHTML = `
+                    <div class="timer-grid" id="timer-display">
+                        <div class="timer-unit"><span class="timer-value" id="days">00</span><span class="timer-label">Jours</span></div>
+                        <div class="timer-unit"><span class="timer-value" id="hours">00</span><span class="timer-label">Heures</span></div>
+                        <div class="timer-unit"><span class="timer-value" id="minutes">00</span><span class="timer-label">Min</span></div>
+                        <div class="timer-unit"><span class="timer-value" id="seconds">00</span><span class="timer-label">Sec</span></div>
+                    </div>`;
+            }
+
+            let diff = targetTs - nowTs;
             const d = Math.floor(diff / (1000 * 60 * 60 * 24));
             const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
