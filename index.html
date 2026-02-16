@@ -11,6 +11,7 @@
             --primary: #2e7d32;
             --accent: #ff9800;
             --bg: #f0f4f8;
+            --facebook: #1877F2;
             --whatsapp: #25D366;
         }
 
@@ -64,7 +65,7 @@
             border-radius: 20px;
             padding: 25px 10px;
             margin: 20px 0;
-            min-height: 120px;
+            min-height: 130px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -95,9 +96,13 @@
             font-weight: bold;
             font-size: 1.2em;
             margin: 0;
+            line-height: 1.4;
         }
 
         .social-btns {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
             margin-top: 30px;
         }
 
@@ -112,9 +117,17 @@
             border-radius: 50px;
             font-weight: bold;
             font-size: 1.05em;
-            background: var(--whatsapp);
             transition: 0.3s;
-            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        .btn-facebook {
+            background: var(--facebook);
+            box-shadow: 0 4px 15px rgba(24, 119, 242, 0.2);
+        }
+
+        .btn-whatsapp {
+            background: var(--whatsapp);
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.2);
         }
 
         .btn:active {
@@ -152,11 +165,11 @@
         </div>
 
         <div class="social-btns">
-            <a href="https://facebook.com/votrepage" target="_blank" class="btn btn-facebook">
+            <a href="https://www.facebook.com/apotrewilliamtetey?locale=fr_FR" target="_blank" class="btn btn-facebook">
                 <i class="fa-brands fa-facebook fa-xl"></i> Suivez-nous sur Facebook
             </a>
-            <a href="https://wa.me/22890045869" class="btn">
-                <i class="fa-brands fa-whatsapp fa-xl"></i> Nous contacter sur WhatsApp
+            <a href="https://wa.me/22890045869" class="btn btn-whatsapp">
+                <i class="fa-brands fa-whatsapp fa-xl"></i> Contactez-nous sur WhatsApp
             </a>
         </div>
     </div>
@@ -189,12 +202,11 @@
             const titleEl = document.getElementById("status-title");
             const contentEl = document.getElementById("timer-content");
 
-            // Minutes actuelles pour les paliers du dimanche
             const currentMin = now.getHours() * 60 + now.getMinutes();
             const ecoleEnd = 7 * 60 + 30;    // 07:30
             const culteEnd = 12 * 60 + 15;   // 12:15
 
-            // SI NOUS SOMMES DIMANCHE MATIN
+            // GESTION DU DIMANCHE MATIN
             if (now.getDay() === 0 && currentMin >= 390 && currentMin < culteEnd) {
                 titleEl.innerHTML = "✨ BIENVENUE ✨";
                 if (currentMin < ecoleEnd) {
@@ -205,9 +217,8 @@
                 return;
             }
 
-            // SINON : MODE COMPTE À REBOURS
+            // MODE COMPTE À REBOURS
             titleEl.innerHTML = '<i class="fa-solid fa-hourglass-half fa-spin"></i> PROCHAIN CULTE DANS :';
-            // Restaurer la grille si elle a été effacée par le message "en cours"
             if (!document.getElementById("timer-display")) {
                 contentEl.innerHTML = `
                     <div class="timer-grid" id="timer-display">
